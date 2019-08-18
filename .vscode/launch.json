@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TodoStarterApplication<todo-starter>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.rest.todostarter.TodoStarterApplication",
+            "projectName": "todo-starter",
+            "args": ""
+        }
+    ]
+}
