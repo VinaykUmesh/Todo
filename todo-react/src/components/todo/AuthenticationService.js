@@ -1,4 +1,3 @@
-
 class AuthenticationService{
     registerLoginSuccessful(username){
         console.log('Login Sucessful');
@@ -11,8 +10,8 @@ class AuthenticationService{
 
     isUserLogged(){
         let user = sessionStorage.getItem("authenticatedUser");
-        if(user === null)return false
-            return true
+        if(user === null) return false
+                return true
     }
 }
 // eslint-disable-next-line
