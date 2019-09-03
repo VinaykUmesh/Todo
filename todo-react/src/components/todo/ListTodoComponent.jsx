@@ -5,14 +5,16 @@ import TodoDataService from '../../api/todo/TodoDataService.js'
 class ListTodoComponent extends Component{
 
     state={
-        todos :[
-            
-        ]
+        todos :[],
+        message : null
     }
 
     componentDidMount(){
-        let username = AuthenticationService.fetchUser();
+        this.refreshTodo()
+    }
 
+    refreshTodo=()=>{
+        let username = AuthenticationService.fetchUser();
         TodoDataService.fetchAllTodo(username)
             .then(
                 response => {
@@ -23,9 +25,29 @@ class ListTodoComponent extends Component{
             )
     }
 
+    deleteTodoById=(id)=>{
+        let username = AuthenticationService.fetchUser();
+        
+        TodoDataService.deleteTodoById(username,id)
+            .then(
+                response => {
+                    this.setState({
+                        message : `Delete of todo ${id} is Successful`
+                    })
+                    this.refreshTodo()
+                }
+            )
+
+    }
+
+    updateTodoById=(id)=>{
+        this.props.history.push(`/todos/${id}`)
+    }
+
     render(){
         return <div>
             <h1>ListTodo</h1>
+            {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
             <div className="container">
                 <table className="table">
                     <thead>
@@ -33,6 +55,8 @@ class ListTodoComponent extends Component{
                             <th>Description</th>
                             <th>Target Date</th>
                             <th>IsCompleted?</th>
+                            <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +66,8 @@ class ListTodoComponent extends Component{
                             <td>{todos.description}</td>
                             <td>{todos.targetDate.toString()}</td>
                             <td>{todos.completed.toString()}</td>
+                            <td><button className="btn btn-success" onClick={()=> this.updateTodoById(todos.id)}>Update</button></td>
+                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoById(todos.id)}>Delete</button></td>
                             </tr>
                         )
                     } 
