@@ -23,6 +23,7 @@ public class HelloWorldController {
 	
 	@GetMapping(path = "/hello-world-bean/path/{name}")
 	public HelloWorldBean helloWorldBeanPath(@PathVariable String name) {
-		return new HelloWorldBean(String.format("Hello %s", name));
+		return new HelloWorldBean(String.format("Hello , %s", name));
+		//throw new RuntimeException("Something went Wrong");
 	}
 }

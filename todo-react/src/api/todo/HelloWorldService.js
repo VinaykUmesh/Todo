@@ -1,10 +1,17 @@
 import axios from "axios";
 
 class HelloWorldService{
-    retriveMessage(){
-        return axios.get("http://localhost:8080/hello-world-bean/path/umesh")
+    executeHelloWorldService(){
+        return axios.get("http://localhost:8080/hello-world")
+    }
+
+    executeHelloWorldServiceBean(){
+        return axios.get("http://localhost:8080/hello-world-bean")
+    }
+
+    executeHelloWorldServicePathVariable(name){
+        return axios.get(`http://localhost:8080/hello-world-bean/path/${name}`)
     }
 }
 
-// eslint-disable-next-line
-export default new HelloWorldService;
+export default new HelloWorldService()

@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import HelloWorldService from "../../api/todo/HelloWorldService";
 
 class WelcomeComponent extends Component{
-    
-    state = {
-        welcomeMsg : ''
-    }
 
-
+        state = {
+            welcomeMsg: ''
+        }
+ 
     render(){
         return <>
             <h2>Welcome</h2>
@@ -20,16 +19,29 @@ class WelcomeComponent extends Component{
             </div>
             <div className="container">
                 {this.state.welcomeMsg}
-                </div>
+            </div>
         </>
     }
 
-    retriveMessage(){
-        HelloWorldService.retriveMessage()
-        .then(response => this.handlerSuccess(response))
+    retriveMessage=()=>{
+        // HelloWorldService.executeHelloWorldService()
+        // .then(response => this.handlerSuccess(response.data.message))
+
+        // HelloWorldService.executeHelloWorldServiceBean()
+        // .then(response => this.handlerSuccess(response.data.message))
+       
+        HelloWorldService.executeHelloWorldServicePathVariable(this.props.match.params.name)
+            .then(response => this.handlerSuccess(response.data.message))
+            //.catch(error => this.handlerError(error.response.data.message))
+    }
+    
+    handlerError=(error)=>{
+         this.setState({
+             welcomeMsg : error
+         })
     }
 
-    handlerSuccess(response){
+    handlerSuccess=(response)=>{
         this.setState({
             welcomeMsg : response
         })
