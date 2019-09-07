@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import AuthenticationService from '../../components/todo/AuthenticationService.js';
 import TodoDataService from '../../api/todo/TodoDataService.js'
+import moment from 'moment';
 
-class ListTodoComponent extends Component{
+class ListTodoComponent extends Component {
 
-    state={
-        todos :[],
-        message : null
+    state = {
+        todos: [],
+        message: null
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.refreshTodo()
     }
 
-    refreshTodo=()=>{
+    refreshTodo = () => {
         let username = AuthenticationService.fetchUser();
         TodoDataService.fetchAllTodo(username)
             .then(
                 response => {
                     this.setState({
-                        todos : response.data
+                        todos: response.data
                     })
                 }
             )
     }
 
-    deleteTodoById=(id)=>{
+    deleteTodoById = (id) => {
         let username = AuthenticationService.fetchUser();
-        
-        TodoDataService.deleteTodoById(username,id)
+
+        TodoDataService.deleteTodoById(username, id)
             .then(
                 response => {
                     this.setState({
-                        message : `Delete of todo ${id} is Successful`
+                        message: `Delete of todo ${id} is Successful`
                     })
                     this.refreshTodo()
                 }
@@ -40,11 +41,15 @@ class ListTodoComponent extends Component{
 
     }
 
-    updateTodoById=(id)=>{
+    updateTodoById = (id) => {
         this.props.history.push(`/todos/${id}`)
     }
 
-    render(){
+    createTodoById = () => {
+        this.props.history.push(`/todos/-1`)
+    }
+
+    render() {
         return <div>
             <h1>ListTodo</h1>
             {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
@@ -60,19 +65,22 @@ class ListTodoComponent extends Component{
                         </tr>
                     </thead>
                     <tbody>
-                    {  
-                        this.state.todos.map(
-                            todos =>  <tr key={todos.id}> 
-                            <td>{todos.description}</td>
-                            <td>{todos.targetDate.toString()}</td>
-                            <td>{todos.completed.toString()}</td>
-                            <td><button className="btn btn-success" onClick={()=> this.updateTodoById(todos.id)}>Update</button></td>
-                            <td><button className="btn btn-warning" onClick={() => this.deleteTodoById(todos.id)}>Delete</button></td>
-                            </tr>
-                        )
-                    } 
+                        {
+                            this.state.todos.map(
+                                todos => <tr key={todos.id}>
+                                    <td>{todos.description}</td>
+                                    <td>{moment(todos.targetDate).format('YYYY-MM-DD')}</td>
+                                    <td>{todos.completed.toString()}</td>
+                                    <td><button className="btn btn-success" onClick={() => this.updateTodoById(todos.id)}>Update</button></td>
+                                    <td><button className="btn btn-warning" onClick={() => this.deleteTodoById(todos.id)}>Delete</button></td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
+                <div className="container">
+                    <button className="btn btn-success" onClick={this.createTodoById}>Add</button>
+                </div>
             </div>
         </div>
     }
