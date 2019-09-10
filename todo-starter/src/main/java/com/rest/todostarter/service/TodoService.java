@@ -1,7 +1,6 @@
 package com.rest.todostarter.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,13 +11,13 @@ import com.rest.todostarter.model.Todo;
 public class TodoService {
 		
 	private static List<Todo> todos = new ArrayList<Todo>();
-	private static int idCounter = 0;
+	//private static int idCounter = 0;
 	
-	static {
-		todos.add(new Todo(++idCounter,"Umesh","Learn TO Fight Alone",new Date(),false));
-		todos.add(new Todo(++idCounter,"Umesh","Learn TO Study",new Date(),false));
-		todos.add(new Todo(++idCounter,"Umesh","Learn TO be Alone",new Date(),false));
-	}
+//	static {
+//		todos.add(new Todo(++idCounter,"Umesh","Learn TO Fight Alone",new Date(),false));
+//		todos.add(new Todo(++idCounter,"Umesh","Learn TO Study",new Date(),false));
+//		todos.add(new Todo(++idCounter,"Umesh","Learn TO be Alone",new Date(),false));
+//	}
 
 	public List<Todo> findAll() {
 		return todos;
@@ -40,7 +39,7 @@ public class TodoService {
 	public Todo save(Todo todo) {
 
 		if(todo.getId() == -1 || todo.getId() == 0) {
-			todo.setId(++idCounter);
+			//todo.setId(++idCounter);
 			todos.add(todo);
 		}else { 
 			deleteById(todo.getId());

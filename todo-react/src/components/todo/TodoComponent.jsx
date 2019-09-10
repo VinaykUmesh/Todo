@@ -15,8 +15,7 @@ class TodoComponent extends Component {
 
     componentDidMount() {
 
-
-        let user = AuthenticationService.isUserLogged();
+        let user = AuthenticationService.fetchUser();
         TodoDataService.retrieveById(user, this.state.id)
             .then(
                 response => {
@@ -29,7 +28,7 @@ class TodoComponent extends Component {
     }
 
     onSubmit = (values) => {
-        let user = AuthenticationService.isUserLogged();
+        let user = AuthenticationService.fetchUser();
         let todo = {
             id: this.state.id,
             description: values.description,
